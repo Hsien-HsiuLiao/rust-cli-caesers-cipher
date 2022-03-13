@@ -2,20 +2,14 @@ use std::io;
 
 fn main() {
     /*
-    
-
   rot13("SERR PBQR PNZC") should decode to the string FREE CODE CAMP
-
 rot13("SERR CVMMN!") should decode to the string FREE PIZZA!
-
 rot13("SERR YBIR?") should decode to the string FREE LOVE?
-
 rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.") should decode to the string THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG.
     */
 
-
     let mut encoded = String::new();
-    println!("Enter a ROT13 encoded string");
+    println!("Enter a ROT13 encoded string:");
 
     io::stdin()
         .read_line(&mut encoded)
@@ -26,30 +20,30 @@ rot13("GUR DHVPX OEBJA SBK WHZCF BIRE GUR YNML QBT.") should decode to the strin
 
 fn decode(input: &String) -> String {
     let mut decoded = String::new();
-    decoded = input.to_string();
-    /* function rot13(str) { // LBH QVQ VG!
-        var num;
-        var newstr="";
-        var decoded="";
-        for (let i=0;i<str.length ;i++){ //iterate over length of string input str
-          num= str.charCodeAt(i);       // get unicode of string at index i and store in num
-       // num = num-13; a=65 Z=90
-          if (num>77 && num <91){
-        decoded += String.fromCharCode(num-13);
-          //decoded += newstr;
-          }
-          else if (num>64 && num <78){
-        decoded += String.fromCharCode(num+13);
-          //decoded += newstr;
-          }
-          else {
-              decoded += String.fromCharCode(num);
-      
-          }  
+    
+    for mut b in input.bytes(){
+        //println!("bytes: {}", b);
+        match b {
+            78..=90 => b = b - 13,
+            64..=77 => b = b + 13,
+            _ => ()
         }
-        return decoded;
-        
-      }
+        decoded.push(b as char);
+    }
+    
+    /*
+    for c in input.chars() {
+       // println!("{}", c);
+       match c {
+        'N'..='Z' => decoded.push( (c.to_string().bytes() - 13) as char),
+        'A'..='M' => decoded.push( c),
+        _ => decoded.push( c)
+        }
+
+    }
+    */
+    /* 
+       // A=65 Z=90
       */
       decoded
 }
